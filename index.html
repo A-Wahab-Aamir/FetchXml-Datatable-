@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <table id="mytable">
+        <thead>
+            <th>COMMON</th>
+            <th>BOTANICAL</th>
+            <th>ZONE</th>
+            <th>LIGHT</th>
+            <th>PRICE</th>
+            <th>AVAILABILITY</th>
+        </thead>
+        <tbody id="tbody">
+            
+            
+        </tbody>
+    </table>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+      $.get("data.xml", function(result){
+        $(result).find("PLANT").each(function(){
+            var c=$(this).find("COMMON").text();
+            var b=$(this).find("BOTANICAL").text();
+            var z=$(this).find("ZONE").text();
+            var l=$(this).find("LIGHT").text();
+            var p=$(this).find("PRICE").text();
+            var a=$(this).find("AVAILABILITY").text();
+
+            document.getElementById('tbody').innerHTML += `
+            <tr>
+                <td>${c}</td>
+                <td>${b}</td>
+                <td>${z}</td>
+                <td>${l}</td>
+                <td>${p}</td>
+                <td>${a}</td>
+            </tr>
+            
+            `
+
+        })
+        $('#mytable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+      })
+    })
+</script>
+
+</body>
+</html>
